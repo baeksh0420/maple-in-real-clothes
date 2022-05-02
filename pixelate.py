@@ -17,7 +17,6 @@ from tqdm import tqdm
 from skimage import io
 
 from pyxelate import Pyx, Pal
-
 class pixelate:
     def plot_(subplots=[], save_as=None, fig_h=9):
         """Plotting helper function"""
@@ -52,7 +51,7 @@ class pixelate:
 
         # load image with 'skimage.io.imread()'
         # 원본 이미지 불러 오기
-        image = io.imread(img_path)
+        image = io.imread(img_path)  
         # 이미지 복사
         img_bgr = image.copy()
         # 이미지 경계 탐색
@@ -83,24 +82,5 @@ class pixelate:
             pixelate.plot_([image, new_image], save_as=None)
         if is_save=="save":
             cv2.imwrite(save_path+path.split("\\")[-1], new_image)
-    
-    def pixelate_all(load_dir,save_dir,mode="none", is_save=None):
         
-        path = load_dir
-        save_path = save_dir
-
-        # 원본 데이터 폴더 경로
-
-        # 경로 안에 있는 이미지들의 파일명을 리스트화
-        img_lst = [name for name in os.listdir(path) if name.endswith(".jpg")]
-
-        # 한 장 씩 변환하여 다른 폴더에 저장
-        for img_str in tqdm(img_lst):
-            new_path = path+img_str
-            pixelate.pixelate(img_path=new_path, mode=mode, is_save=None, save_path=save_path)
-            
-            
-# use example
-# load_dir = "C:\\Users\\Joshua\\Desktop\\mapleGAN\\04_04_CP-VTON\\data\\train\\cloth\\"
-# 디렉토리 전체 이미지 변환
-# pixelate.pixelate_all(load_dir=load_dir, save_dir=None, mode="show", is_save=None)
+      
