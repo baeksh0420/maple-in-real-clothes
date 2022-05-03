@@ -5,20 +5,21 @@
 # !pip install git+https://github.com/sedthh/pyxelate.git
 
 # Open cv library
-import cv2
-from os import path
-import os
-import numpy as np
 
-# matplotlib for displaying the images 
-from matplotlib import pyplot as plt
-
-from tqdm import tqdm
-from skimage import io
-
-from pyxelate import Pyx, Pal
-class pixelate:
+class Pixelate:
     def plot_(subplots=[], save_as=None, fig_h=9):
+        import cv2
+        from os import path
+        import os
+        import numpy as np
+        
+        # matplotlib for displaying the images 
+        from matplotlib import pyplot as plt
+        
+        from tqdm import tqdm
+        from skimage import io
+        
+        from pyxelate import Pyx, Pal
         """Plotting helper function"""
         fig, ax = plt.subplots(int(np.ceil(len(subplots) / 3)), 
                                min(3, len(subplots)), 
@@ -39,7 +40,7 @@ class pixelate:
             plt.savefig(path.join("examples/", save_as), transparent=True)
         plt.show()
         
-    def pixelate(img_path, mode=None, is_save=None, save_path=None):
+    def pix1(img_path, mode=None, is_save=None, save_path=None):
         # Open cv library
         import cv2
         from os import path
@@ -79,8 +80,8 @@ class pixelate:
         
         # save new image with 'skimage.io.imsave()'
         if mode=="show":
-            pixelate.plot_([image, new_image], save_as=None)
+            Pixelate.plot_([image, new_image], save_as=None)
         if is_save=="save":
-            cv2.imwrite(save_path+path.split("\\")[-1], new_image)
+            cv2.imwrite(save_path, new_image)
         
       
