@@ -8,6 +8,9 @@
 
 class Pixelate:
     def plot_(subplots=[], save_as=None, fig_h=9):
+        """
+        Plotting helper function
+        """
         import cv2
         from os import path
         import os
@@ -20,7 +23,7 @@ class Pixelate:
         from skimage import io
         
         from pyxelate import Pyx, Pal
-        """Plotting helper function"""
+        
         fig, ax = plt.subplots(int(np.ceil(len(subplots) / 3)), 
                                min(3, len(subplots)), 
                                figsize=(18, fig_h))
@@ -84,4 +87,17 @@ class Pixelate:
         if is_save=="save":
             cv2.imwrite(save_path, new_image)
         
-      
+     
+    def pixelate_all(function,load_dir,save_dir,mode="none", is_save=None):
+
+        # 경로 안에 있는 이미지들의 파일명을 리스트화
+        img_lst = [name for name in os.listdir(path) if name.endswith(".jpg")]
+
+        # 한 장 씩 변환하여 다른 폴더에 저장
+        for img_str in tqdm(img_lst):
+            load_path = load_dir+img_str
+            save_path = save_dir+img_str
+            function(img_path=load_path, mode=mode, is_save=is_save, save_path=save_path)
+
+ 
+    
