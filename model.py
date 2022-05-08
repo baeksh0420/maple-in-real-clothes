@@ -9,26 +9,36 @@ from step.segmentation import *
 from step.keypoint import *
 from step.model import *
 
-pipeline_pixelate     = {"method": Pixelate.method1
+pipeline_pixelate     = {
+                         "step"    : Pixelate
+                        ,"method"  : Pixelate.method1
+                        ,"mode"    : mode
                         ,"load_dir": "./data/test/cloth-raw/"
                         ,"save_dir": "./data/test/cloth/"
-                        ,"mode": mode}
+                        }
 
-pipeline_segmentation = {"method": Segmentation.method1
+pipeline_segmentation = {
+                         "step"    : Segmentation
+                        ,"method"  : Segmentation.method1
+                        ,"mode"    : mode
                         ,"load_dir": "./data/test/cloth/"
                         ,"save_dir": "./data/test/cloth-mask/"
-                        ,"mode": mode}
+                        }
 
 # 이거 path 찾아라
-pipeline_keypoint     = {"method": Keypoint.method1
+pipeline_keypoint     = {
+                         "method": Keypoint.method1
+                        ,"mode": mode
                         ,"load_dir": "a"
                         ,"save_dir": "b"
-                        ,"mode": mode}
+                        }
 
-pipeline_tryon        = {"method": Tryon.method1
+pipeline_tryon        = {
+                         "method": Tryon.method1
+                         ,"mode": mode
                          ,"load_dir": "a"
                          ,"save_dir": "b"
-                         ,"mode": mode}
+                        }
 
 
 pipeline = {"pixelate": pipeline_pixelate
@@ -37,11 +47,13 @@ pipeline = {"pixelate": pipeline_pixelate
            ,"tryon": pipeline_tryon}
 
 
+pipeline = {"segmentation": pipeline_segmentation}
+
 # [C] FUNCTION FOR FITTING
 def active_pipeline(step,pipeline):
     kwargs = pipeline[step].copy()
-    kwargs.pop("method")
-    return pipeline[step]['method'](**kwargs)
+    kwargs.pop("step")
+    return pipeline[step]['step'].fit(**kwargs)
 
 def fit(pipeline,mode=None):
     step_num = 0

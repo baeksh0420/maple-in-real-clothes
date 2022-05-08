@@ -1,8 +1,62 @@
+# 함수별로 필요한 패키지 중복 많이되면 같이 넣고, 아니면 분리하는 것도 좋을듯 또는 개별 함수에 import문 넣던지
+
 from tensorboardX import SummaryWriter
 import torch
 from PIL import Image
 import os
+import cv2
+from matplotlib import pyplot as plt 
 
+# ------ PJ01 util 신규 함수
+def read_list(load_dir, file_type = "jpg"):
+    """
+    경로내 전체 파일 리스트 추출
+    """
+    path      = "./"
+    file_name = os.listdir(load_dir)
+    load_list = [load_dir + "/" + f for f in file_name if f.endswith("."+file_type)]
+    
+    if len(load_list) == 0:
+        raise Exception("ERROR! - no image file in your directory, '{load_dir}''".format("load_dir"))
+
+    return load_list
+
+def save_path(save_dir, load_dir, load_path, file_type = "jpg"):
+    """
+    하나의 이미지를 저장할 경로
+    """
+    if not os.path.isdir(save_dir):
+        print(print_format+"Make a new directory : {}".format(save_dir))
+        os.mkdir(save_dir)
+        exit(1)
+
+    save_path = load_path.replace(load_dir, save_dir)  
+        
+    return save_path
+
+def read_img(load_path, load_mode = cv2.IMREAD_COLOR ,file_type = "jpg"):
+    """
+    하나의 이미지를 읽음
+    """
+    if not os.path.isfile(load_path):
+        raise Exception("ERROR! - no image file, '{load_path}' in your directory".format(load_path=load_path))
+    
+    return cv2.imread(load_path,load_mode)
+    
+def write_img(th1, save_path, mode):
+    """
+    하나의 이미지를 저장
+    """
+    print_format = "      |     "  
+    
+    if "live" in mode:
+        cv2.imwrite(save_path, th1)
+    if "show" in mode:
+        plt.imshow(th1,'gray')
+        plt.show()  
+        
+        
+# ------ cp-vton util 함수
 def tensor_for_board(img_tensor):
     # map into [0,1]
     tensor = (img_tensor.clone()+1) * 0.5

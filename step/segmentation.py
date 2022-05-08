@@ -1,6 +1,32 @@
-class Segmentation:
+import step.util as util
 
-    def method1(load_dir,save_dir,mode="none"):
+class Segmentation:
+    def fit(method, mode, load_dir, save_dir, print_format = "      |     "):
+        
+        file_type = "jpg"
+        load_mode = 0
+        load_list = util.read_list(load_dir, file_type)
+        
+        print_method_description = 0
+        
+        for load_path in load_list:
+            img             = util.read_img(load_path, load_mode, file_type)
+            ret, th1, text  = method(img, mode)
+            save_path       = util.save_path(save_dir, load_dir, load_path, file_type) 
+            
+            util.write_img(th1, save_path, mode)
+            
+            # 첫 이미지 실행시에만 method 설명 프린트
+            print_method_description += 1
+            if print_method_description == 1:
+                print(text)
+            
+        if mode == "test":
+            print(print_format+"test mode, no write")        
+            
+            
+            
+    def method1(img, mode="none"):
         
         """
         작업 히스토리 (역순으로 작성)
@@ -16,47 +42,20 @@ class Segmentation:
         method_num  = method_name[len(method_str):]    
         version     = "0.0"                            
         description = "cv2를 활용한 방법"              
-        print("\n   [STEP : {step}, METHOD : {method_num}, VERSION : {version}]  : {description}\n   ".format(step=step
+        text_1      = "\n   [STEP : {step}, METHOD : {method_num}, VERSION : {version}]  : {description}\n   ".format(step=step
                                                                                                       ,method_num=method_num
                                                                                                       ,version=version
-                                                                                                      ,description =description))
-        print("      |-> log :\n      |")              
+                                                                                                      ,description =description)
+        text_2      = "\n      |-> log :\n      |"
+        text        = text_1 + text_2
         print_format = "      |     "                        
         
         # [B] 함수 본문
         
         import cv2
         import numpy as np 
-        from matplotlib import pyplot as plt 
-        import os
-        path      = "./"
-        load_file = os.listdir(load_dir)
-        load_list = [load_dir + "/" + f for f in load_file if f.endswith(".jpg")]
-
-        for jpg in load_list:
-            # 1. load
-            img       = cv2.imread(jpg,0)
-            
-            # 2. segmentation
-            img       = cv2.medianBlur(img,5) # -- 노이즈 제거
-            ret, th1  = cv2.threshold(img,0,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU) 
-
-            # 3. write
-            if mode == "live":
-                if not os.path.isdir(save_dir):
-                    print(print_format+"Make a new directory : {}".format(save_dir))
-                    os.mkdir(save_dir)
-                    exit(1)
-
-                save_path = jpg.replace(load_dir, save_dir)    
-                cv2.imwrite(save_path, th1)    
-                
-            # 4. additional mode - show, debug, ....
-            if mode == "show":
-                plt.imshow(th1,'gray')
-                plt.show()
-
-        # 3. no write - test mode, for setting to print once
-        if mode == "test":
-            print(print_format+"test mode, no write")
-                
+        
+        img       = cv2.medianBlur(img,5) # -- 노이즈 제거
+        ret, th1  = cv2.threshold(img,0,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU) 
+        
+        return ret, th1, text
