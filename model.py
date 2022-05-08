@@ -12,6 +12,11 @@ from step.keypoint import *
 from step.model import *
 
 
-
+def fit():
+    
+Pixelate.method1("a","b",mode="none")
+Segmentation.method1("a","b",mode="none")
+Keypoint.method1("a","b",mode="none")
+Tryon.method1("a","b",mode="none")
 
 

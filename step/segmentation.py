@@ -1,4 +1,12 @@
 class Segmentation:
+    
+    # 포맷팅 후 지우기
+    def method1(load_dir,save_dir,mode="none"):
+        """
+        방식 설명 : ~~ 에서 제공하는 툴을 사용한 수동 감지법 
+        """
+        print("- Segmentation (method 1) : ~~ 에서 제공하는 툴을 사용한 수동 감지법")
+    
     def seg1(load_dir,save_dir,mode="none"):
         import cv2
         import numpy as np 

@@ -7,7 +7,14 @@ import os
 
 import numpy as np
 
-
+# 포맷팅 후 지우기
+class Tryon:
+    def method1(load_dir,save_dir,mode="none"):
+        """
+        방식 설명 : ~~ 에서 제공하는 툴을 사용한 수동 감지법 
+        """
+        print("- Tryon (method 1) : ~~ 에서 제공하는 툴을 사용한 수동 감지법")
+    
 # Weight Initialization
 def weights_init_normal(m):
     classname = m.__class__.__name__

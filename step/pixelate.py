@@ -7,6 +7,14 @@
 # Open cv library
 
 class Pixelate:
+    
+    # 포맷팅 후 지우기
+    def method1(load_dir,save_dir,mode="none"):
+        """
+        방식 설명 : ~~ 에서 제공하는 툴을 사용한 수동 감지법 
+        """
+        print("- Pixelate (method 1) : ~~ 에서 제공하는 툴을 사용한 수동 감지법")
+    
     def plot_(subplots=[], save_as=None, fig_h=9):
         """
         Plotting helper function
