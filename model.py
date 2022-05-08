@@ -1,16 +1,13 @@
 ## main - cp vton 코드에 있는 test.py의 골자를 따라감
 
-# step 01 - pixelate
-# step 02 - segmentation
-# step 03 - keypoint
-# step 04 - model (cp_vton)
+# [A] MODE
+mode = "test"
 
+# [B] PIEPLINE - COLAB CODE
 from step.pixelate import *
 from step.segmentation import *
 from step.keypoint import *
 from step.model import *
-    
-mode = "test"
 
 pipeline_pixelate     = {"method": Pixelate.method1
                         ,"load_dir": "./data/test/cloth-raw/"
@@ -40,6 +37,7 @@ pipeline = {"pixelate": pipeline_pixelate
            ,"tryon": pipeline_tryon}
 
 
+# [C] FUNCTION FOR FITTING
 def active_pipeline(step,pipeline):
     kwargs = pipeline[step].copy()
     kwargs.pop("method")
@@ -54,4 +52,7 @@ def fit(pipeline,mode=None):
         active_pipeline(step,pipeline)
         print("\n")
         
+        
+        
+# [D] FOR RUNNING        
 fit(pipeline)    

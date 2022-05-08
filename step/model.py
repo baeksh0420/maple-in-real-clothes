@@ -24,7 +24,7 @@ class Tryon:
         method_str  = method_name.rstrip('0123456789') 
         method_num  = method_name[len(method_str):]    
         version     = "0.0"                            
-        description = "cp-vton논문의 pretrained checkpoint 사용한 방법"              
+        description = "cp-vton 논문의 pretrained checkpoint 사용한 방법"              
         print("\n   [STEP : {step}, METHOD : {method_num}, VERSION : {version}]  : {description}\n   ".format(step=step
                                                                                                       ,method_num=method_num
                                                                                                       ,version=version
