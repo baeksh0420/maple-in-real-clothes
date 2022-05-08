@@ -4,23 +4,24 @@
 # !pip install git
 # !pip install git+https://github.com/sedthh/pyxelate.git
 
-# Open cv library
+import step.util as util
+import cv2
 
 class Pixelate:
     def fit(method, mode, load_dir, save_dir, print_format = "      |     "):
         
         file_type = "jpg"
-        load_mode = cv2.IMREAD_COLOR
+        load_mode = cv2.IMREAD_COLOR #default
         load_list = util.read_list(load_dir, file_type)
         
         print_method_description = 0
         
         for load_path in load_list:
-            img             = util.read_img(load_path, load_mode, file_type)
-            ret, th1, text  = method(img, mode)
+            img             = util.read_img(load_path, "io", load_mode, file_type)
+            th, text        = method(img, mode)
             save_path       = util.save_path(save_dir, load_dir, load_path, file_type) 
             
-            util.write_img(th1, save_path, mode)
+            util.write_img(th, save_path, mode)
             
             # 첫 이미지 실행시에만 method 설명 프린트
             print_method_description += 1
@@ -39,8 +40,7 @@ class Pixelate:
         - 2022/04/24 (joshua)  - load_dir내 모든 이미지에 적용하도록 for문 포함
         """
         
-       # [A] 방식 설명 (= 각 파이프라인 스텝별 방법을 구분할 수 있는 설명 또는 버전)
-
+        # [A] 방식 설명 __________________________________________________________________________________________________________
         step        = "Pixelate"                   
         method_name = Pixelate.method1.__name__    
         method_str  = method_name.rstrip('0123456789') 
@@ -60,7 +60,7 @@ class Pixelate:
         from os import path
         import numpy as np
         from matplotlib import pyplot as plt
-#         from skimage import io
+        from skimage import io
         from pyxelate import Pyx, Pal  
         
         # 1. 이미지 경계 탐색
@@ -88,7 +88,7 @@ class Pixelate:
         # 3_3. transform image to pixel art using the learned color palette
         new_image = pyx.transform(img_bgr)
         
-        return pyx.transform(th), text
+        return new_image, text
 
     
          

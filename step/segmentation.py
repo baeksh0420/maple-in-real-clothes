@@ -1,4 +1,5 @@
-import step.util as util
+import step.util as util        
+import cv2
 
 class Segmentation:
     def fit(method, mode, load_dir, save_dir, print_format = "      |     "):
@@ -8,13 +9,14 @@ class Segmentation:
         load_list = util.read_list(load_dir, file_type)
         
         print_method_description = 0
+
         
         for load_path in load_list:
-            img             = util.read_img(load_path, load_mode, file_type)
-            ret, th1, text  = method(img, mode)
+            img             = util.read_img(load_path, "cv2", load_mode, file_type)
+            ret, th, text   = method(img, mode)
             save_path       = util.save_path(save_dir, load_dir, load_path, file_type) 
             
-            util.write_img(th1, save_path, mode)
+            util.write_img(th, save_path, mode)
             
             # 첫 이미지 실행시에만 method 설명 프린트
             print_method_description += 1
@@ -56,6 +58,6 @@ class Segmentation:
         import numpy as np 
         
         img       = cv2.medianBlur(img,5) # -- 노이즈 제거
-        ret, th1  = cv2.threshold(img,0,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU) 
+        ret, th  = cv2.threshold(img,0,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU) 
         
-        return ret, th1, text
+        return ret, th, text

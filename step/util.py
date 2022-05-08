@@ -34,25 +34,29 @@ def save_path(save_dir, load_dir, load_path, file_type = "jpg"):
         
     return save_path
 
-def read_img(load_path, load_mode = cv2.IMREAD_COLOR ,file_type = "jpg"):
+def read_img(load_path, load_pkg , load_mode = cv2.IMREAD_COLOR ,file_type = "jpg"):
     """
     하나의 이미지를 읽음
     """
     if not os.path.isfile(load_path):
         raise Exception("ERROR! - no image file, '{load_path}' in your directory".format(load_path=load_path))
-    
-    return cv2.imread(load_path,load_mode)
-    
-def write_img(th1, save_path, mode):
+#     return cv2.imread(load_path,load_mode)
+    if load_pkg == "cv2":
+        return cv2.imread(load_path,load_mode)
+    elif load_pkg == "io":
+        from skimage import io
+        return io.imread(load_path,load_mode)
+
+def write_img(th, save_path, mode):
     """
     하나의 이미지를 저장
     """
     print_format = "      |     "  
     
     if "live" in mode:
-        cv2.imwrite(save_path, th1)
+        cv2.imwrite(save_path, th)
     if "show" in mode:
-        plt.imshow(th1,'gray')
+        plt.imshow(th,'gray')
         plt.show()  
         
         

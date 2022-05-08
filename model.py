@@ -1,10 +1,10 @@
 ## main - cp vton 코드에 있는 test.py의 골자를 따라감
 
 # [A] MODE
-mode = "test"
+mode = "live"
 
 # [B] PIEPLINE - COLAB CODE
-from step.pixelate import *
+from step.pixelate_new import *
 from step.segmentation import *
 from step.keypoint import *
 from step.model import *
@@ -47,7 +47,12 @@ pipeline = {"pixelate": pipeline_pixelate
            ,"tryon": pipeline_tryon}
 
 
-pipeline = {"segmentation": pipeline_segmentation}
+pipeline = {"pixelate": pipeline_pixelate
+           ,"segmentation": pipeline_segmentation}
+
+
+
+# pipeline = {"segmentation": pipeline_segmentation}
 
 # [C] FUNCTION FOR FITTING
 def active_pipeline(step,pipeline):
