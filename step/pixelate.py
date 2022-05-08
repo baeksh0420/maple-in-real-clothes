@@ -8,12 +8,30 @@
 
 class Pixelate:
     
-    # 포맷팅 후 지우기
     def method1(load_dir,save_dir,mode="none"):
+        
         """
-        방식 설명 : ~~ 에서 제공하는 툴을 사용한 수동 감지법 
+        작업 히스토리 (역순으로 작성)
+        - 2022/05/01 (olive46) - 함수 기본 골자 세팅    
+        - 2022/04/24 (joshua)  - load_dir내 모든 이미지에 적용하도록 for문 포함
         """
-        print("- Pixelate (method 1) : ~~ 에서 제공하는 툴을 사용한 수동 감지법")
+        
+       # [A] 방식 설명 (= 각 파이프라인 스텝별 방법을 구분할 수 있는 설명 또는 버전)
+
+        step        = "Pixelate"                   
+        method_name = Pixelate.method1.__name__    
+        method_str  = method_name.rstrip('0123456789') 
+        method_num  = method_name[len(method_str):]    
+        version     = "0.0"                            
+        description = "https://github.com/sedthh/pyxelate.git의 pyxelate를 사용한 방법"              
+        print("\n   [STEP : {step}, METHOD : {method_num}, VERSION : {version}]  : {description}\n   ".format(step=step
+                                                                                                      ,method_num=method_num
+                                                                                                      ,version=version
+                                                                                                      ,description =description))
+        print("      |-> log :\n      |")              
+        print_format = "      |     "                        
+        
+        # [B] 함수 본문
     
     def plot_(subplots=[], save_as=None, fig_h=9):
         """
