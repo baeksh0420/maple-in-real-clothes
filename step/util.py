@@ -6,7 +6,6 @@ from PIL import Image
 import os
 import cv2
 from matplotlib import pyplot as plt 
-# from skimage import io
 
 # ------ PJ01 util 신규 함수
 def read_list(load_dir, file_type = "jpg"):
@@ -53,7 +52,8 @@ def read_img(load_path, load_pkg , load_mode):
     if load_pkg == "cv2":
         return cv2.imread(load_path,load_mode)
     elif load_pkg == "io":
-        return io.imread(load_path,load_mode)
+        from skimage import io
+        return io.imread(load_path)
 
 def write_img(th, save_path, mode):
     """
