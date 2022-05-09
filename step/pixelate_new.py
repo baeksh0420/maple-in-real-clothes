@@ -6,6 +6,7 @@
 
 import step.util as util
 import cv2
+from skimage import io
 
 class Pixelate:
     def fit(method, mode, load_dir, save_dir, print_format = "      |     "):
@@ -17,7 +18,9 @@ class Pixelate:
         print_method_description = 0
         
         for load_path in load_list:
-            img             = util.read_img(load_path, "io", load_mode, file_type)
+#             img             = util.read_img(load_path, load_mode)
+            img             = util.read_img(load_path, "cv2", load_mode)
+#             img             = util.read_img(load_path, "io", load_mode)
             th, text        = method(img, mode)
             save_path       = util.save_path(save_dir, load_dir, load_path, file_type) 
             
@@ -57,10 +60,6 @@ class Pixelate:
                 
         # [B] 함수 본문 __________________________________________________________________________________________________________
         import cv2
-        from os import path
-        import numpy as np
-        from matplotlib import pyplot as plt
-        from skimage import io
         from pyxelate import Pyx, Pal  
         
         # 1. 이미지 경계 탐색

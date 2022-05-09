@@ -12,7 +12,7 @@ class Segmentation:
 
         
         for load_path in load_list:
-            img             = util.read_img(load_path, "cv2", load_mode, file_type)
+            img             = util.read_img(load_path, "cv2", load_mode)
             ret, th, text   = method(img, mode)
             save_path       = util.save_path(save_dir, load_dir, load_path, file_type) 
             
