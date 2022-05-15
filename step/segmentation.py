@@ -13,6 +13,7 @@ class Segmentation:
         
         for load_path in load_list:
             img             = util.read_img(load_path, "cv2", load_mode)
+            img             = cv2.resize(img, dsize=(192,256), interpolation=cv2.INTER_LINEAR)
             ret, th, text   = method(img, mode)
             save_path       = util.save_path(save_dir, load_dir, load_path, file_type) 
             

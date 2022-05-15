@@ -78,13 +78,13 @@ def fit(pipeline,mode=None):
     # -- preprocess -> 쌓이면 모듈로 파기, data loader와?
     util.make_pairs(mode= "single") # 이거 파일이 없으면 진행하도록 
     
-#     # -- main step
-#     for step in list(pipeline.keys()):
-#         step_num += 1
-#         mode      = pipeline[step]['mode']
-#         print("\n** PIPELINE {step_num} (mode = {mode}) ___________________________________________________________________________________________".format(step_num=step_num,mode=mode))
-#         active_pipeline(step,pipeline)
-#         print("\n")
+    # -- main step
+    for step in list(pipeline.keys()):
+        step_num += 1
+        mode      = pipeline[step]['mode']
+        print("\n** PIPELINE {step_num} (mode = {mode}) ___________________________________________________________________________________________".format(step_num=step_num,mode=mode))
+        active_pipeline(step,pipeline)
+        print("\n")
         
         
         

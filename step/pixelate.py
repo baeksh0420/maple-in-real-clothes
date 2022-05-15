@@ -21,6 +21,7 @@ class Pixelate:
             img             = util.read_img(load_path, "cv2", load_mode)
 #             img             = util.read_img(load_path, "io", load_mode) # 메모리 큼. 비교 필요
             th, text        = method(img, mode)
+            th             = cv2.resize(th, dsize=(192,256), interpolation=cv2.INTER_LINEAR)
             save_path       = util.save_path(save_dir, load_dir, load_path, file_type) 
             
             util.write_img(th, save_path, mode)
