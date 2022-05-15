@@ -1,5 +1,8 @@
 ## main - cp vton 코드에 있는 test.py의 골자를 따라감
 
+import warnings
+warnings.filterwarnings("ignore")
+
 # [A] MODE
 mode = "live"
 
@@ -8,6 +11,7 @@ from step.pixelate import *
 from step.segmentation import *
 from step.keypoint import *
 from step.model import *
+from step.util import *
 
 # pipeline_preprocess   = {
 #                          "step"    : Preprocess
@@ -74,13 +78,13 @@ def fit(pipeline,mode=None):
     # -- preprocess -> 쌓이면 모듈로 파기, data loader와?
     util.make_pairs(mode= "single") # 이거 파일이 없으면 진행하도록 
     
-    # -- main step
-    for step in list(pipeline.keys()):
-        step_num += 1
-        mode      = pipeline[step]['mode']
-        print("\n** PIPELINE {step_num} (mode = {mode}) ___________________________________________________________________________________________".format(step_num=step_num,mode=mode))
-        active_pipeline(step,pipeline)
-        print("\n")
+#     # -- main step
+#     for step in list(pipeline.keys()):
+#         step_num += 1
+#         mode      = pipeline[step]['mode']
+#         print("\n** PIPELINE {step_num} (mode = {mode}) ___________________________________________________________________________________________".format(step_num=step_num,mode=mode))
+#         active_pipeline(step,pipeline)
+#         print("\n")
         
         
         

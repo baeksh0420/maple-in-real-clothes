@@ -7,10 +7,10 @@ import argparse
 import os
 import time
 from dataset import CPDataset, CPDataLoader
-from model import GMM, UnetGenerator, load_checkpoint
+from step.model import GMM, UnetGenerator, load_checkpoint
 
 from tensorboardX import SummaryWriter
-from util import board_add_image, board_add_images, save_images
+from step.util import board_add_image, board_add_images, save_images
 
 
 def get_opt():
