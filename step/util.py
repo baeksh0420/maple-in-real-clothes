@@ -12,9 +12,10 @@ def read_list(load_dir, file_type = "jpg"):
     """
     경로내 전체 파일 리스트 추출
     """
-    path      = "./"
+#     path      = "./"
     file_name = os.listdir(load_dir)
-    load_list = [load_dir + "/" + f for f in file_name if f.endswith("."+file_type)]
+#     load_list = [load_dir + "/" + f for f in file_name if f.endswith("."+file_type)]
+    load_list = [load_dir + f for f in file_name if f.endswith("."+file_type)]
     
     if len(load_list) == 0:
         raise Exception("ERROR! - no image file in your directory, '{load_dir}''".format("load_dir"))
@@ -33,15 +34,7 @@ def save_path(save_dir, load_dir, load_path, file_type = "jpg"):
     save_path = load_path.replace(load_dir, save_dir)  
         
     return save_path
-
-# def read_img(load_path, load_mode):
-#     """
-#     하나의 이미지를 읽음
-#     """
-#     if not os.path.isfile(load_path):
-#         raise Exception("ERROR! - no image file, '{load_path}' in your directory".format(load_path=load_path))
-#     return cv2.imread(load_path,load_mode)
-    
+   
 def read_img(load_path, load_pkg , load_mode):
     """
     하나의 이미지를 읽음
@@ -67,6 +60,41 @@ def write_img(th, save_path, mode):
         plt.imshow(th,'gray')
         plt.show()  
         
+def make_pairs(cloth_load_dir = "./data/test/cloth/"
+               , image_load_dir = "./data/test/image/"
+               , save_path = "./data/test_pairs.txt"
+               , mode = "single"
+               , file_type = "jpg"):
+    """
+    make pairs.txt
+    - `cloth.jpg` - 입힐 옷, 실제 옷 사진
+    - `image.jpg` - 입힐 사람, 캐릭터 이미지
+    - ex ) cloth.jpg image.jpg
+    """
+
+    # -- prepare list
+    cloth_list = read_list(cloth_load_dir, file_type)
+    image_list = read_list(image_load_dir, file_type)
+
+    # -- save 'test_pairs.txt'
+    if mode == "single":
+        import itertools
+        f = open(save_path, "w")
+        for c, i in zip(cloth_list, itertools.cycle(image_list)):
+            line = line = c.split(cloth_load_dir)[1]+' '+i.split(image_load_dir)[1]+'\n'
+            f.write(line)
+        f.close()
+
+    elif mode == "pair":
+        f = open(save_path, "w")
+        for c, i in zip(cloth_list, image_list):
+            line = line = c.split(cloth_load_dir)[1]+' '+i.split(image_load_dir)[1]+'\n'
+            f.write(line)
+        f.close()
+
+#         #open and read the file after the appending:
+#         f = open(save_path, "r")
+#         print(f.read())        
         
 # ------ cp-vton util 함수
 def tensor_for_board(img_tensor):

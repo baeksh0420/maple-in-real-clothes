@@ -9,6 +9,14 @@ from step.segmentation import *
 from step.keypoint import *
 from step.model import *
 
+# pipeline_preprocess   = {
+#                          "step"    : Preprocess
+#                         ,"method"  : Preprocess.basic
+#                         ,"mode"    : mode
+#                         ,"load_dir": "./data/test/cloth-raw/"
+#                         ,"save_dir": "./data/test/cloth/"
+#                         }
+
 pipeline_pixelate     = {
                          "step"    : Pixelate
                         ,"method"  : Pixelate.method1
@@ -62,6 +70,11 @@ def active_pipeline(step,pipeline):
 
 def fit(pipeline,mode=None):
     step_num = 0
+    
+    # -- preprocess -> 쌓이면 모듈로 파기, data loader와?
+    util.make_pairs(mode= "single") # 이거 파일이 없으면 진행하도록 
+    
+    # -- main step
     for step in list(pipeline.keys()):
         step_num += 1
         mode      = pipeline[step]['mode']
