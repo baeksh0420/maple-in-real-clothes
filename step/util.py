@@ -81,14 +81,18 @@ def make_pairs(cloth_load_dir = "./data/test/cloth/"
         import itertools
         f = open(save_path, "w")
         for c, i in zip(cloth_list, itertools.cycle(image_list)):
-            line = line = c.split(cloth_load_dir)[1]+' '+i.split(image_load_dir)[1]+'\n'
+            c_name = c.split(cloth_load_dir)[1]
+            i_name = i.split(image_load_dir)[1]
+            line = line = i_name+' '+c_name+'\n'
             f.write(line)
         f.close()
 
     elif mode == "pair":
         f = open(save_path, "w")
         for c, i in zip(cloth_list, image_list):
-            line = line = c.split(cloth_load_dir)[1]+' '+i.split(image_load_dir)[1]+'\n'
+            c_name = c.split(cloth_load_dir)[1]
+            i_name = i.split(image_load_dir)[1]
+            line = line = i_name+' '+c_name+'\n'
             f.write(line)
         f.close()
 
