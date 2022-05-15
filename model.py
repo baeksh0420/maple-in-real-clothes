@@ -76,7 +76,7 @@ def fit(pipeline,mode=None):
     step_num = 0
     
     # -- preprocess -> 쌓이면 모듈로 파기, data loader와?
-    util.make_pairs(mode= "single") # 이거 파일이 없으면 진행하도록 
+    util.make_pairs(mode= "pair") # 이거 파일이 없으면 진행하도록 
     
     # -- main step
     for step in list(pipeline.keys()):
