@@ -43,7 +43,10 @@ def read_img(load_path, load_pkg , load_mode):
         raise Exception("ERROR! - no image file, '{load_path}' in your directory".format(load_path=load_path))
 #     return cv2.imread(load_path,load_mode)
     if load_pkg == "cv2":
-        return cv2.imread(load_path,load_mode)
+        if load_mode != None:
+            return cv2.imread(load_path,load_mode)
+        else:
+            return cv2.imread(load_path)
     elif load_pkg == "io":
         from skimage import io
         return io.imread(load_path)
