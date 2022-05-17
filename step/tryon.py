@@ -11,14 +11,14 @@ from step.model import *
 import os
 
 class Tryon:
-      def fit(method, mode, name, stage, workers, datamode, datalist, checkpoint, print_format = "      |     "):
+      def fit(method, mode, name, stage, workers, datamode, data_list, checkpoint, print_format = "      |     "):
 
         print_method_description = 0
         
         # ! python test.py --name gmm --stage GMM --workers 1 --datamode test --data_list test_pairs.txt --checkpoint checkpoints/gmm_final.pth
         # ! python test.py --name tom --stage TOM --workers 4 --datamode test --data_list test_pairs.txt --checkpoint checkpoints/tom_final.pth
         for i in range(len(name)):
-            text, command_script = method(name[i], stage[i], workers[i], datamode[i], datalist[i], checkpoint[i], mode="none")
+            text, command_script = method(name[i], stage[i], workers[i], datamode[i], data_list[i], checkpoint[i], mode="none")
             os.system(command_script) ; print("** RUN COMMAND SCRIPT - "+ command_script)
             
             print_method_description += 1
@@ -31,7 +31,7 @@ class Tryon:
             
             
             
-      def method1(name, stage, workers, datamode, datalist, checkpoint, mode="none"):
+      def method1(name, stage, workers, datamode, data_list, checkpoint, mode="none"):
         
         """
         작업 히스토리 (역순으로 작성)
@@ -60,7 +60,7 @@ class Tryon:
         , stage = stage
         , workers = workers
         , datamode = datamode
-        , datalist = datalist
+        , data_list = data_list
         , checkpoint = checkpoint)    
     
         

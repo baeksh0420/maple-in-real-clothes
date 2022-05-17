@@ -45,7 +45,7 @@ pipeline_keypoint     = {
                         ,"save_dir": "b"
                         }
 
-# fit(method, mode, name, stage, workers, datamode, datalist, checkpoint
+# fit(method, mode, name, stage, workers, datamode, data_list, checkpoint
 pipeline_tryon        = {
                          "step"    : Tryon
                          ,"method": Tryon.method1
@@ -54,7 +54,7 @@ pipeline_tryon        = {
                          ,"stage": ["GMM", "TOM"]
                          ,"workers": ["4", "4"]
                          ,"datamode": ["test", "test"]
-                         ,"datalist": ["test_pairs.txt", "test_pairs.txt"]
+                         ,"data_list": ["test_pairs.txt", "test_pairs.txt"]
                          ,"checkpoint": ["checkpoints/gmm_final.pth", "checkpoints/tom_final.pth"]
                         }
 
