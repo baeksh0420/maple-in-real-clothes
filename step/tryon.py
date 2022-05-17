@@ -31,7 +31,7 @@ class Tryon:
             
             
             
-      def method1(name, stage, workers, datamode, data_list, checkpoint, mode="none"):
+      def method1(name, stage, workers, datamode, datalist, checkpoint, mode="none"):
         
         """
         작업 히스토리 (역순으로 작성)
