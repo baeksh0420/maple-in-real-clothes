@@ -10,7 +10,7 @@ mode = "live"
 from step.pixelate import *
 from step.segmentation import *
 from step.keypoint import *
-from step.model import *
+from step.tryon import *
 from step.util import *
 
 # pipeline_preprocess   = {
@@ -45,11 +45,16 @@ pipeline_keypoint     = {
                         ,"save_dir": "b"
                         }
 
+# fit(method, mode, name, stage, workers, datamode, datalist, checkpoint
 pipeline_tryon        = {
                          "method": Tryon.method1
                          ,"mode": mode
-                         ,"load_dir": "a"
-                         ,"save_dir": "b"
+                         ,"name": ["gmm", "tom"]
+                         ,"stage": ["GMM", "TOM"]
+                         ,"workers": ["4", "4"]
+                         ,"datamode": ["test", "test"]
+                         ,"datalist": ["test_pairs.txt", "test_pairs.txt"]
+                         ,"checkpoint": ["checkpoints/gmm_final.pth", "checkpoints/tom_final.pth"]
                         }
 
 
@@ -58,9 +63,12 @@ pipeline = {"pixelate": pipeline_pixelate
            ,"keypoint": pipeline_keypoint
            ,"tryon": pipeline_tryon}
 
-
 pipeline = {"pixelate": pipeline_pixelate
-           ,"segmentation": pipeline_segmentation}
+           ,"segmentation": pipeline_segmentation 
+           ,"tryon": pipeline_tryon}
+
+# pipeline = {"pixelate": pipeline_pixelate
+#            ,"segmentation": pipeline_segmentation}
 
 # pipeline = {"segmentation": pipeline_segmentation}
 
