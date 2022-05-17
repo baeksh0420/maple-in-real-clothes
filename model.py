@@ -68,7 +68,7 @@ pipeline = {"pixelate": pipeline_pixelate
            ,"segmentation": pipeline_segmentation 
            ,"tryon": pipeline_tryon}
 
-# pipeline = {"tryon": pipelinㄴe_tryon}
+pipeline = {"tryon": pipeline_tryon}
 
 # pipeline = {"pixelate": pipeline_pixelate
 #            ,"segmentation": pipeline_segmentation}
