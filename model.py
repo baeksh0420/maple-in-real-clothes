@@ -47,7 +47,8 @@ pipeline_keypoint     = {
 
 # fit(method, mode, name, stage, workers, datamode, datalist, checkpoint
 pipeline_tryon        = {
-                         "method": Tryon.method1
+                         "step"    : Tryon
+                         ,"method": Tryon.method1
                          ,"mode": mode
                          ,"name": ["gmm", "tom"]
                          ,"stage": ["GMM", "TOM"]
@@ -66,6 +67,8 @@ pipeline = {"pixelate": pipeline_pixelate
 pipeline = {"pixelate": pipeline_pixelate
            ,"segmentation": pipeline_segmentation 
            ,"tryon": pipeline_tryon}
+
+pipeline = {"tryon": pipeline_tryon}
 
 # pipeline = {"pixelate": pipeline_pixelate
 #            ,"segmentation": pipeline_segmentation}
