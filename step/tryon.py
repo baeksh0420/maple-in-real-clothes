@@ -51,19 +51,19 @@ class Tryon:
                                                                                                                      ,method_num=method_num
                                                                                                                      ,version=version
                                                                                                                      ,description =description)
-        text_2      = "\n      |-> log :\n      |"
-        text        = text_1 + text_2
-        print_format = "      |     "                        
-        
-        command_script = "python test.py --name {name} --stage {stage} --workers {workers} --datamode {datamode} --data_list {data_list} --checkpoint {checkpoints}".format(method = method
-        , name = name
-        , stage = stage
-        , workers = workers
-        , datamode = datamode
-        , data_list = data_list
-        , checkpoint = checkpoint)    
-    
+        text_2       = "\n      |-> log :\n      |"
+        text         = text_1 + text_2
+        print_format = "      |     "  
         
         # [B] 함수 본문
+        method       = "test.py"
+        command_script = "python {method} --name {name} --stage {stage} --workers {workers} --datamode {datamode} --data_list {data_list} --checkpoint {checkpoints}".format(method     = method
+                    , name       = name
+                    , stage      = stage
+                    , workers    = workers
+                    , datamode   = datamode
+                    , data_list  = data_list
+                    , checkpoint = checkpoint)    
+    
         return text, command_script
  
