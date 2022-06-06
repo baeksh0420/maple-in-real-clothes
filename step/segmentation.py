@@ -96,41 +96,41 @@ class Segmentation:
 #         img       = cv2.medianBlur(img,5) # -- 노이즈 제거
 #         ret, th   = cv2.threshold(img,0,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU) 
         
-        # --- new part
-        #components of the skin
-        stats = regionprops(img,'centroid');
-        topCentroid = stats(1).Centroid;
-        rightCentroid = stats(1).Centroid;
-        leftCentroid = stats(1).Centroid;
-        for x in range(1,len(stats),1):
-            centroid = stats(x).Centroid;
-            if topCentroid(2)>centroid(2):
-                topCentroid = centroid;
-            elif centroid(1)<leftCentroid(1):
-                leftCentroid = centroid;
-            elif centroid(1)>rightCentroid(1):
-                rightCentroid = centroid;
-            end
-        end
+#         # --- new part
+#         #components of the skin
+#         stats = regionprops(img,'centroid');
+#         topCentroid = stats(1).Centroid;
+#         rightCentroid = stats(1).Centroid;
+#         leftCentroid = stats(1).Centroid;
+#         for x in range(1,len(stats),1):
+#             centroid = stats(x).Centroid;
+#             if topCentroid(2)>centroid(2):
+#                 topCentroid = centroid;
+#             elif centroid(1)<leftCentroid(1):
+#                 leftCentroid = centroid;
+#             elif centroid(1)>rightCentroid(1):
+#                 rightCentroid = centroid;
+#             end
+#         end
 
-        #first seed - the average of the most left and right centroids.
-        centralSeed = int16((rightCentroid+leftCentroid)/2);
+#         #first seed - the average of the most left and right centroids.
+#         centralSeed = int16((rightCentroid+leftCentroid)/2);
 
-        #second seed - a pixel which is right below the face centroid.
-        faceSeed = int(topCentroid)
-        faceSeed(2) = faceSeed(2)+40; 
+#         #second seed - a pixel which is right below the face centroid.
+#         faceSeed = int(topCentroid)
+#         faceSeed(2) = faceSeed(2)+40; 
 
-        #stage 3: std filter
-        varIm = stdfilt(rgb2gray(im));
+#         #stage 3: std filter
+#         varIm = stdfilt(rgb2gray(im));
 
-        #stage 4 - region growing on varIm  using faceSeed and centralSeed
-        res1=regiongrowing(varIm,centralSeed(2),centralSeed(1),8);
-        res2=regiongrowing(varIm,faceSeed(2),faceSeed(1),8);
-        res = res1|res2;
+#         #stage 4 - region growing on varIm  using faceSeed and centralSeed
+#         res1=regiongrowing(varIm,centralSeed(2),centralSeed(1),8);
+#         res2=regiongrowing(varIm,faceSeed(2),faceSeed(1),8);
+#         res = res1|res2;
 
-        #noise reduction
-        res = imclose(res,strel('disk',3));
-        res = imopen(res,strel('disk',2));
+#         #noise reduction
+#         res = imclose(res,strel('disk',3));
+#         res = imopen(res,strel('disk',2));
         # --- check part
         #         print(type(sure_bg))
         from matplotlib import pyplot as plt 
