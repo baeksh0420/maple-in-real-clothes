@@ -62,3 +62,78 @@ class Segmentation:
         ret, th  = cv2.threshold(img,0,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU) 
         
         return ret, th, text
+
+          
+            
+    def method2(img, mode="none"):
+        
+        """
+        작업 히스토리 (역순으로 작성)
+        - 2022/06/06 (olive46) - 보정 작업
+        """
+        
+       # [A] 방식 설명 (= 각 파이프라인 스텝별 방법을 구분할 수 있는 설명 또는 버전)
+
+        step        = "Segmentation"                   
+        method_name = Segmentation.method2.__name__    
+        method_str  = method_name.rstrip('0123456789') 
+        method_num  = method_name[len(method_str):]    
+        version     = "0.0"                            
+        description = "cv2를 활용한 방법"              
+        text_1      = "\n   [STEP : {step}, METHOD : {method_num}, VERSION : {version}]  : {description}\n   ".format(step=step
+                                                                                                      ,method_num=method_num
+                                                                                                      ,version=version
+                                                                                                      ,description =description)
+        text_2      = "\n      |-> log :\n      |"
+        text        = text_1 + text_2
+        print_format = "      |     "                        
+        
+        # [B] 함수 본문
+        
+        import cv2
+        import numpy as np 
+        
+#         img       = cv2.medianBlur(img,5) # -- 노이즈 제거
+#         ret, th   = cv2.threshold(img,0,255,cv2.THRESH_BINARY_INV+cv2.THRESH_OTSU) 
+        
+        # --- new part
+        #components of the skin
+        stats = regionprops(img,'centroid');
+        topCentroid = stats(1).Centroid;
+        rightCentroid = stats(1).Centroid;
+        leftCentroid = stats(1).Centroid;
+        for x in range(1,len(stats),1):
+            centroid = stats(x).Centroid;
+            if topCentroid(2)>centroid(2):
+                topCentroid = centroid;
+            elif centroid(1)<leftCentroid(1):
+                leftCentroid = centroid;
+            elif centroid(1)>rightCentroid(1):
+                rightCentroid = centroid;
+            end
+        end
+
+        #first seed - the average of the most left and right centroids.
+        centralSeed = int16((rightCentroid+leftCentroid)/2);
+
+        #second seed - a pixel which is right below the face centroid.
+        faceSeed = int(topCentroid)
+        faceSeed(2) = faceSeed(2)+40; 
+
+        #stage 3: std filter
+        varIm = stdfilt(rgb2gray(im));
+
+        #stage 4 - region growing on varIm  using faceSeed and centralSeed
+        res1=regiongrowing(varIm,centralSeed(2),centralSeed(1),8);
+        res2=regiongrowing(varIm,faceSeed(2),faceSeed(1),8);
+        res = res1|res2;
+
+        #noise reduction
+        res = imclose(res,strel('disk',3));
+        res = imopen(res,strel('disk',2));
+        # --- check part
+        #         print(type(sure_bg))
+        from matplotlib import pyplot as plt 
+        plt.imshow(res,'gray')
+        plt.show()  
+        return ret, th, text
