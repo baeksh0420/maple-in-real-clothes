@@ -10,6 +10,8 @@ import os.path as osp
 import numpy as np
 import json
 
+from util import save_images
+
 class CPDataset(data.Dataset):
     """
         Dataset for CP-VTON.
@@ -28,7 +30,8 @@ class CPDataset(data.Dataset):
         self.data_path = osp.join(opt.dataroot, opt.datamode)
         self.transform = transforms.Compose([  \
                 transforms.ToTensor(),   \
-                transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
+                transforms.Normalize((0.5), (0.5))]) #하면 해결은 됨. 하지만 맞는 방법은 아닐듯 함. -> 찾아보니 맞는듯..?
+                # transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]) 
         self.transform_pose = transforms.Compose([  \
                 transforms.ToTensor(),   \
                 transforms.Normalize((0.5), (0.5))])
@@ -55,11 +58,14 @@ class CPDataset(data.Dataset):
         # cloth image & cloth mask
         if self.stage == 'GMM':
             c = Image.open(osp.join(self.data_path, 'cloth', c_name))
+            # print("c",np.array(c).shape)
+            # c = c.resize((192, 256))
             cm = Image.open(osp.join(self.data_path, 'cloth-mask', c_name))
+            # cm = cm.resize((192, 256))
         else:
             c = Image.open(osp.join(self.data_path, 'warp-cloth', c_name))
             cm = Image.open(osp.join(self.data_path, 'warp-mask', c_name))
-     
+            
         c = self.transform(c)  # [-1,1]
         cm_array = np.array(cm)
         cm_array = (cm_array >= 128).astype(np.float32)
@@ -68,11 +74,15 @@ class CPDataset(data.Dataset):
 
         # person image 
         im = Image.open(osp.join(self.data_path, 'image', im_name))
+        im = im.resize((192, 256))
+        # save_images(torch.from_numpy(np.array([np.array(im)])), ["image_person_192_256"], "data/temp") 
         im = self.transform(im) # [-1,1]
+        # Error: output with shape [1, 68, 43] doesn't match the broadcast shape [3, 68, 43]
 
         # load parsing image
         parse_name = im_name.replace('.jpg', '.png')
         im_parse = Image.open(osp.join(self.data_path, 'image-parse', parse_name))
+        im_parse = im_parse.resize((192, 256))
         parse_array = np.array(im_parse)
         parse_shape = (parse_array > 0).astype(np.float32)
         parse_head = (parse_array == 1).astype(np.float32) + \
