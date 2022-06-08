@@ -87,7 +87,7 @@ class Segmentation:
         text_2      = "\n      |-> log :\n      |"
         text        = text_1 + text_2
         print_format = "      |     "                        
-        
+          
         # [B] 함수 본문
         
         import cv2
