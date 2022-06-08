@@ -73,7 +73,7 @@ pipeline = {"pixelate": pipeline_pixelate
 # pipeline = {"pixelate": pipeline_pixelate
 #            ,"segmentation": pipeline_segmentation}
 
-# pipeline = {"segmentation": pipeline_segmentation}
+pipeline = {"segmentation": pipeline_segmentation}
 
 # pipeline = {"pixelate": pipeline_pixelate}
 
