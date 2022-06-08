@@ -62,6 +62,8 @@ class Pixelate:
         import cv2
         from pyxelate import Pyx, Pal  
         
+
+        
         # 1. 이미지 경계 탐색
         img_bgr             = img.copy()   
         img_bitwise_not_bgr = cv2.bitwise_not(img_bgr) 
@@ -89,6 +91,98 @@ class Pixelate:
         
         return new_image, text
 
+    
+    def method2(img, mode="none"):
+        
+        """
+        작업 히스토리 (역순으로 작성)
+        - 2022/05/08 (olive46) - 함수 기본 골자 세팅    
+        - 2022/04/24 (joshua)  - load_dir내 모든 이미지에 적용하도록 for문 포함
+        - 2022/06/08 (joshua)  - 배경 비슷한 이미지에 대해 배경 검은색으로 변경하는 코드 포함
+        """
+        
+        # [A] 방식 설명 __________________________________________________________________________________________________________
+        step        = "Pixelate"                   
+        method_name = Pixelate.method1.__name__    
+        method_str  = method_name.rstrip('0123456789') 
+        method_num  = method_name[len(method_str):]    
+        version     = "0.0"                            
+        description = "https://github.com/sedthh/pyxelate.git의 pyxelate를 사용한 방법"              
+        text_1      = "\n   [STEP : {step}, METHOD : {method_num}, VERSION : {version}]  : {description}\n   ".format(step=step
+                                                                                                      ,method_num=method_num
+                                                                                                      ,version=version
+                                                                                                      ,description =description)
+        text_2      = "\n      |-> log :\n      |"
+        text        = text_1 + text_2
+        print_format = "      |     "                        
+                
+        # [B] 함수 본문 __________________________________________________________________________________________________________
+        import cv2
+        from pyxelate import Pyx, Pal  
+
+        # 배경 검은 색으로 바꾸는 메소드
+        sample_img = img.copy()
+
+        # 사각형 좌표: 시작점의 x,y  ,넢이, 너비
+        w, h, _ = sample_img.shape
+        padding = 3
+        rectangle = (padding, padding, h-padding, w-padding)
+
+
+        # 초기 마스크 생성
+        mask = np.zeros(sample_img.shape[:2], np.uint8)
+
+        # grabCut에 사용할 임시 배열 생성
+        bgdModel = np.zeros((1, 65), np.float64)
+        fgdModel = np.zeros((1, 65), np.float64)
+
+        # grabCut 실행
+        cv2.grabCut(sample_img, # 원본 이미지
+                   mask,       # 마스크
+                   rectangle,  # 사각형
+                   bgdModel,   # 배경을 위한 임시 배열
+                   fgdModel,   # 전경을 위한 임시 배열 
+                   2,          # 반복 횟수
+                   cv2.GC_INIT_WITH_RECT) # 사각형을 위한 초기화
+        
+        # 배경인 곳은 0, 그 외에는 1로 설정한 마스크 생성
+        mask_2 = np.where((mask==2) | (mask==0), 0, 1).astype('uint8')
+        
+        # 이미지에 새로운 마스크를 곱행 배경을 제외
+        image_rgb_nobg = sample_img * mask_2[:, :, np.newaxis]
+        
+        
+        #++++++++++++++++++++++++++++++++++++++++++++++++++++++++#
+        
+        # 픽셀레이트 부분
+        im = image_rgb_nobg
+        
+        # 1. 이미지 경계 탐색
+        img_bgr             = im.copy()   
+        img_bitwise_not_bgr = cv2.bitwise_not(img_bgr) 
+        img_bitwise_not_bgr2gray = cv2.cvtColor(img_bitwise_not_bgr, cv2.COLOR_BGR2GRAY)
+        
+        # 2. 이미지 경계 쓰레시 홀드 찾아서 검정색 outline 그리기
+        ret, img_binary = cv2.threshold(img_bitwise_not_bgr2gray, cv2.ADAPTIVE_THRESH_GAUSSIAN_C,255,cv2.THRESH_BINARY)
+        contours, hierarchy = cv2.findContours(img_binary, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+        img_contour = cv2.drawContours(img_bgr, contours, -1, (0, 0, 0), 2)
+        
+        # 3. 도트화(pixelation 하는 부분)
+        downsample_by = 4  # new image will be 1/14th of the original in size
+        palette = 8  # find 7 colors
+
+        # 3_1. Instantiate Pyx transformer
+        pyx = Pyx(factor=downsample_by, palette=palette)
+
+        # 3_2. fit an image, allow Pyxelate to learn the color palette
+        pyx.fit(img_bgr)
+        
+        th = img_bgr
+
+        # 3_3. transform image to pixel art using the learned color palette
+        new_image = pyx.transform(img_bgr)
+        
+        return new_image, text    
     
          
     
