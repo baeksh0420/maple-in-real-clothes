@@ -6,11 +6,11 @@ import torch.nn.functional as F
 import argparse
 import os
 import time
-from dataset import CPDataset, CPDataLoader
-from model import GMM, UnetGenerator, VGGLoss, load_checkpoint, save_checkpoint
+from step.dataset import CPDataset, CPDataLoader
+from step.model import GMM, UnetGenerator, VGGLoss, load_checkpoint, save_checkpoint
 
 from tensorboardX import SummaryWriter
-from util import board_add_image, board_add_images
+from step.util import board_add_image, board_add_images
 
 
 def get_opt():
