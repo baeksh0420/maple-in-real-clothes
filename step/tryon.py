@@ -56,7 +56,7 @@ class Tryon:
         print_format = "      |     "  
         
         # [B] 함수 본문
-        method       = "test.py"
+        method       = "step/test.py"
         command_script = "python {method} --name {name} --stage {stage} --workers {workers} --datamode {datamode} --data_list {data_list} --checkpoint {checkpoint}".format(method     = method
                     , name       = name
                     , stage      = stage
