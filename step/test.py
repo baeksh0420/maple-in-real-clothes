@@ -6,11 +6,11 @@ import torch.nn.functional as F
 import argparse
 import os
 import time
-from step.dataset import CPDataset, CPDataLoader
-from step.model import GMM, UnetGenerator, load_checkpoint
+from dataset import CPDataset, CPDataLoader
+from model import GMM, UnetGenerator, load_checkpoint
 
 from tensorboardX import SummaryWriter
-from step.util import board_add_image, board_add_images, save_images
+from util import board_add_image, board_add_images, save_images
 
 
 def get_opt():
@@ -156,7 +156,7 @@ def main():
             print("*** test_gmm is DONE! ***")
             
     elif opt.stage == 'TOM':
-        model = UnetGenerator(39, 4, 6, ngf=64, norm_layer=nn.InstanceNorm2d)
+        model = UnetGenerator(25, 4, 6, ngf=64, norm_layer=nn.InstanceNorm2d)
         print("*** TOM model is Loaded! ***")
         
         load_checkpoint(model, opt.checkpoint)

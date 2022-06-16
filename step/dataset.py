@@ -30,8 +30,8 @@ class CPDataset(data.Dataset):
         self.data_path = osp.join(opt.dataroot, opt.datamode)
         self.transform = transforms.Compose([  \
                 transforms.ToTensor(),   \
-                transforms.Normalize((0.5), (0.5))]) #하면 해결은 됨. 하지만 맞는 방법은 아닐듯 함. -> 찾아보니 맞는듯..?
-                # transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]) 
+                # transforms.Normalize((0.5), (0.5))]) #하면 해결은 됨. 하지만 맞는 방법은 아닐듯 함. -> 찾아보니 맞는듯..?
+                transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]) 
         self.transform_pose = transforms.Compose([  \
                 transforms.ToTensor(),   \
                 transforms.Normalize((0.5), (0.5))])
@@ -58,10 +58,10 @@ class CPDataset(data.Dataset):
         # cloth image & cloth mask
         if self.stage == 'GMM':
             c = Image.open(osp.join(self.data_path, 'cloth', c_name))
-            # print("c",np.array(c).shape)
-            # c = c.resize((192, 256))
+            print("c",np.array(c).shape) #
+            c = c.resize((192, 256)) #
             cm = Image.open(osp.join(self.data_path, 'cloth-mask', c_name))
-            # cm = cm.resize((192, 256))
+            cm = cm.resize((192, 256)) #
         else:
             c = Image.open(osp.join(self.data_path, 'warp-cloth', c_name))
             cm = Image.open(osp.join(self.data_path, 'warp-mask', c_name))
@@ -82,7 +82,7 @@ class CPDataset(data.Dataset):
         # load parsing image
         parse_name = im_name.replace('.jpg', '.png')
         im_parse = Image.open(osp.join(self.data_path, 'image-parse', parse_name))
-        im_parse = im_parse.resize((192, 256))
+        # im_parse = im_parse.resize((192, 256)) #sh 수정
         parse_array = np.array(im_parse)
         parse_shape = (parse_array > 0).astype(np.float32)
         parse_head = (parse_array == 1).astype(np.float32) + \
@@ -105,6 +105,11 @@ class CPDataset(data.Dataset):
         # upper cloth
         im_c = im * pcm + (1 - pcm) # [-1,1], fill 1 for other parts
         im_h = im * phead - (1 - phead) # [-1,1], fill 0 for other parts
+        print('im',type(im), np.shape(im))
+        print('im_c',type(im_c), np.shape(im_c))
+        print('pcm',type(pcm), np.shape(pcm))
+        print('im_h',type(im_h), np.shape(im_h))
+        print('phead',type(phead), np.shape(phead))
 
         # load pose points
         pose_name = im_name.replace('.jpg', '_keypoints.json')

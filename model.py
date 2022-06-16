@@ -55,7 +55,7 @@ pipeline_tryon        = {
                          ,"workers": ["4", "4"]
                          ,"datamode": ["test", "test"]
                          ,"data_list": ["test_pairs.txt", "test_pairs.txt"]
-                         ,"checkpoint": ["checkpoint/gmm/gmm_final.pth", "checkpoint/tom/tom_final.pth"]
+                         ,"checkpoint": ["checkpoints/gmm/gmm_final.pth", "checkpoints/tom/tom_final.pth"]
                         }
 
 
