@@ -58,7 +58,6 @@ class CPDataset(data.Dataset):
         # cloth image & cloth mask
         if self.stage == 'GMM':
             c = Image.open(osp.join(self.data_path, 'cloth', c_name))
-            print("c",np.array(c).shape) #
             c = c.resize((192, 256)) #
             cm = Image.open(osp.join(self.data_path, 'cloth-mask', c_name))
             cm = cm.resize((192, 256)) #
@@ -81,7 +80,10 @@ class CPDataset(data.Dataset):
 
         # load parsing image
         parse_name = im_name.replace('.jpg', '.png')
-        im_parse = Image.open(osp.join(self.data_path, 'image-parse', parse_name))
+        # if parse_name in ('000001_0.png','000321_0.png'):
+        #     print("--------------------------------------------------",parse_name)
+            
+        im_parse = Image.open(osp.join(self.data_path, 'image-parse', parse_name)).convert('P')
         # im_parse = im_parse.resize((192, 256)) #sh 수정
         parse_array = np.array(im_parse)
         parse_shape = (parse_array > 0).astype(np.float32)
@@ -105,14 +107,17 @@ class CPDataset(data.Dataset):
         # upper cloth
         im_c = im * pcm + (1 - pcm) # [-1,1], fill 1 for other parts
         im_h = im * phead - (1 - phead) # [-1,1], fill 0 for other parts
-        print('im',type(im), np.shape(im))
-        print('im_c',type(im_c), np.shape(im_c))
-        print('pcm',type(pcm), np.shape(pcm))
-        print('im_h',type(im_h), np.shape(im_h))
-        print('phead',type(phead), np.shape(phead))
+        # print('im',type(im), np.shape(im))
+        # print('im_c',type(im_c), np.shape(im_c))
+        # print('pcm',type(pcm), np.shape(pcm))
+        # print('im_h',type(im_h), np.shape(im_h))
+        # print('phead',type(phead), np.shape(phead))
 
         # load pose points
+        # if im_name.split(".")[0] in ('000001_0','000321_0'):
+        #     print("--------------------------------------------------",im_name)
         pose_name = im_name.replace('.jpg', '_keypoints.json')
+        
         with open(osp.join(self.data_path, 'pose', pose_name), 'r') as f:
             pose_label = json.load(f)
             pose_data = pose_label['people'][0]['pose_keypoints']
