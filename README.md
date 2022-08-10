@@ -4,7 +4,7 @@ hehehe
 
 ## Step 1.
 ### Pre train
-
+<br>
 <img src = "https://user-images.githubusercontent.com/64413742/183881567-d642b629-69cc-4673-a5d8-300f2fc1f351.png" width="20%">
 <img src = "https://user-images.githubusercontent.com/64413742/183881615-da1ed498-df01-4ead-92fb-cffde8d009e2.png" width="20%">
 <img src = "https://user-images.githubusercontent.com/64413742/183881633-88b9d994-da96-4baf-9bdd-9868fcf1b314.png" width="60%">
