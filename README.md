@@ -1,9 +1,18 @@
-# PJ_01
-hahaha
-hehehe
+# PJ_01 hahaha
+메이플 캐릭터에 실존하는 옷입히기를 시작한다 ~ 7개월ing<br><br>
+
+### Info
+◾  MODEL : CP-VTON<br>
+◾  <br>
+◾  <br>
+
+<br>
+<br>
 
 ## Step 1 : Pretrain
-이미 학습된 체크포인트를 활용하여 결과 예측
+이미 학습된 체크포인트를 활용하여 결과 예측<br>
+<br>
+<b>Result</b>
 <div style="width:80%; margin:0 auto;">
 <img src = "https://user-images.githubusercontent.com/64413742/183881567-d642b629-69cc-4673-a5d8-300f2fc1f351.png" width="15%">
 <img src = "https://user-images.githubusercontent.com/64413742/183881615-da1ed498-df01-4ead-92fb-cffde8d009e2.png" width="15%">
@@ -23,7 +32,8 @@ hehehe
 ## Step 2 : Train
 메이플 캐릭터에 맞게 모델 학습
 <br>
-학습 데이터 구축
+<br>
+<b>Data preparation</b>
 |이름|설명|수급.. 방법|
 |---|---|---|
 |cloth|옷 이미지|내용|
