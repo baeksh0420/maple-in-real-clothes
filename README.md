@@ -25,6 +25,7 @@ GMM
 ```
 ! python test.py --name tom --stage TOM --workers 4 --datamode test --data_list test_pairs.txt --checkpoint checkpoints/tom/tom_final.pth
 ```
+<br>
 
 ## Results
 ```data/test/try_on```
@@ -100,9 +101,12 @@ def train_tom(opt, train_loader, model, board):
         optimizer.step()
 ```
 <br>
+<br>
 
 ## Contributors
 [Shyun Im](https://github.com/shyun46), [Joshua Park](https://github.com/Hinterhalter), [Sohyeon Baek](https://github.com/baeksh0420)
+<br>
+<br>
 <br>
 
 ## If improvements are made...
