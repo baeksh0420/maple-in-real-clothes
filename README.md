@@ -1,4 +1,4 @@
-# Dressing characters in real-world clothes (MapleStory ver)
+# Characters in real-world clothes (MapleStory ver)
 *Do you have a favorite outfit? And do you have a favorite game character?*<br>
 *Imagine how amazing it would be if your character were dressed in your favorite clothes!*<br>
 <br>
