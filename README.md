@@ -1,8 +1,8 @@
-# Characters in real-world clothes (MapleStory ver)
+# AI-Based Clothing Transfer for Game Characters (MapleStory ver)
 *Do you have a favorite outfit? And do you have a favorite game character?*<br>
 *Imagine how amazing it would be if your character were dressed in your favorite clothes!*<br>
 <br>
-This is a model that **applies real-world clothing to virtual characters**. <br>
+This is a model that **applies real-world clothing to gamr characters**. <br>
 With just a few preliminary settings, game characters can wear your own clothes. <br>
 This model utilizes CP-VTON.
 <br>
